@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A visually stunning Rock Paper Scissors game with interactive gameplay, animations, and local 1v1 mode.">
+  <title>Rock Paper Scissors — Ultimate Showdown</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Start Screen -->
+  <div id="start-screen" class="screen active">
+    <div class="start-content">
+      <div class="logo-container">
+        <div class="logo-icons">
+          <span class="logo-icon rock-icon">🪨</span>
+          <span class="logo-icon paper-icon">📄</span>
+          <span class="logo-icon scissors-icon">✂️</span>
+        </div>
+        <h1 class="game-title">Rock Paper Scissors</h1>
+        <p class="game-subtitle">Ultimate Showdown</p>
+      </div>
+
+      <!-- Game Mode Toggle -->
+      <div class="mode-select">
+        <p class="mode-label">Game Mode</p>
+        <div class="round-options">
+          <button class="mode-btn active" data-mode="cpu" id="mode-cpu">
+            🤖 vs CPU
+          </button>
+          <button class="mode-btn" data-mode="pvp" id="mode-pvp">
+            👥 1v1 Local
+          </button>
+        </div>
+      </div>
+
+      <div class="mode-select">
+        <p class="mode-label">Choose Rounds</p>
+        <div class="round-options">
+          <button class="round-btn" data-rounds="3" id="rounds-3">First to 3</button>
+          <button class="round-btn active" data-rounds="5" id="rounds-5">First to 5</button>
+          <button class="round-btn" data-rounds="∞" id="rounds-infinite">Endless</button>
+        </div>
+      </div>
+      <button id="play-btn" class="play-btn">
+        <span>Start Game</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- PvP Turn Screen (handoff between players) -->
+  <div id="turn-screen" class="screen">
+    <div class="turn-content">
+      <div class="turn-icon" id="turn-icon">🎮</div>
+      <h2 class="turn-title" id="turn-title">Player 1's Turn</h2>
+      <p class="turn-subtitle" id="turn-subtitle">Hand the device to Player 1</p>
+      <p class="turn-hint">No peeking! 👀</p>
+      <button id="ready-btn" class="play-btn ready-btn">
+        <span>I'm Ready</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Game Screen -->
+  <div id="game-screen" class="screen">
+    <header class="game-header">
+      <div class="score-card player-score-card" id="player-score-card">
+        <span class="score-label" id="p1-label">You</span>
+        <span class="score-value" id="player-score">0</span>
+      </div>
+      <div class="round-info">
+        <span class="round-text" id="round-text">Round 1</span>
+        <span class="vs-badge">VS</span>
+      </div>
+      <div class="score-card cpu-score-card" id="cpu-score-card">
+        <span class="score-label" id="p2-label">CPU</span>
+        <span class="score-value" id="cpu-score">0</span>
+      </div>
+    </header>
+
+    <main class="arena">
+      <!-- Player 1 Side -->
+      <div class="arena-side player-side">
+        <div class="choice-display" id="player-choice-display">
+          <div class="choice-emoji" id="player-emoji">❓</div>
+        </div>
+        <p class="side-label" id="p1-side-label">Your Pick</p>
+      </div>
+
+      <!-- Center Result -->
+      <div class="result-area">
+        <div class="result-badge" id="result-badge">
+          <span id="result-text">Choose your weapon!</span>
+        </div>
+      </div>
+
+      <!-- Player 2 / CPU Side -->
+      <div class="arena-side cpu-side">
+        <div class="choice-display" id="cpu-choice-display">
+          <div class="choice-emoji" id="cpu-emoji">❓</div>
+        </div>
+        <p class="side-label" id="p2-side-label">CPU's Pick</p>
+      </div>
+    </main>
+
+    <!-- PvP turn indicator shown above weapon buttons -->
+    <div class="pvp-turn-indicator" id="pvp-turn-indicator" style="display: none;">
+      <span id="pvp-turn-text">🎯 Player 1 — Pick your weapon!</span>
+    </div>
+
+    <section class="controls">
+      <div class="weapon-buttons">
+        <button class="weapon-btn" data-choice="rock" id="btn-rock">
+          <span class="weapon-emoji">🪨</span>
+          <span class="weapon-name">Rock</span>
+        </button>
+        <button class="weapon-btn" data-choice="paper" id="btn-paper">
+          <span class="weapon-emoji">📄</span>
+          <span class="weapon-name">Paper</span>
+        </button>
+        <button class="weapon-btn" data-choice="scissors" id="btn-scissors">
+          <span class="weapon-emoji">✂️</span>
+          <span class="weapon-name">Scissors</span>
+        </button>
+      </div>
+    </section>
+
+    <footer class="game-footer">
+      <div class="history-strip" id="history-strip"></div>
+      <button class="reset-btn" id="reset-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+        New Game
+      </button>
+    </footer>
+  </div>
+
+  <!-- Game Over Screen -->
+  <div id="gameover-screen" class="screen">
+    <div class="gameover-content">
+      <div class="trophy-container" id="trophy-container">
+        <span class="trophy-emoji" id="trophy-emoji">🏆</span>
+      </div>
+      <h2 class="gameover-title" id="gameover-title">You Win!</h2>
+      <p class="gameover-subtitle" id="gameover-subtitle">Congratulations, Champion!</p>
+      <div class="final-scores">
+        <div class="final-score-item">
+          <span class="fs-label" id="fs-p1-label">You</span>
+          <span class="fs-value" id="final-player-score">0</span>
+        </div>
+        <span class="fs-divider">—</span>
+        <div class="final-score-item">
+          <span class="fs-label" id="fs-p2-label">CPU</span>
+          <span class="fs-value" id="final-cpu-score">0</span>
+        </div>
+      </div>
+      <div class="gameover-actions">
+        <button id="rematch-btn" class="play-btn rematch-btn">
+          <span>Rematch</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+        </button>
+        <button id="home-btn" class="home-btn">Back to Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
