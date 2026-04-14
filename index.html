@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rock Paper Scissors – rps-online.com</title>
+  <meta name="description" content="Play Rock Paper Scissors against the computer or locally with a friend." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <h1>✊ 🖐️ ✌️ Rock Paper Scissors</h1>
+  <p class="tagline">Play against the computer or challenge a friend locally!</p>
+
+  <!-- Mode selector -->
+  <div id="mode-selector" role="group" aria-label="Game mode">
+    <button class="mode-btn active" data-mode="computer">🤖 vs Computer</button>
+    <button class="mode-btn" data-mode="local">👥 Local 2-Player</button>
+  </div>
+
+  <main id="game">
+
+    <!-- Score board -->
+    <div class="scoreboard" aria-label="Score">
+      <div class="score-block">
+        <span class="score-label">Player 1</span>
+        <span class="score-value" id="score-p1">0</span>
+      </div>
+      <span class="score-divider">–</span>
+      <span class="score-divider">–</span>
+      <div class="score-block">
+        <span class="score-label" id="score-p2-label">Computer</span>
+        <span class="score-value" id="score-p2">0</span>
+      </div>
+    </div>
+
+    <!-- Arena – shows each side's last choice -->
+    <div class="arena" aria-live="polite" aria-label="Current round">
+      <div class="player-side">
+        <span class="player-name">Player 1</span>
+        <div class="choice-display" id="p1-display">❓</div>
+      </div>
+      <span class="vs-badge">VS</span>
+      <div class="player-side">
+        <span class="player-name" id="p2-label">Computer</span>
+        <div class="choice-display" id="p2-display">❓</div>
+      </div>
+    </div>
+
+    <!-- Result banner -->
+    <div id="result-banner" aria-live="polite">Make your move!</div>
+
+    <!-- Two-player: reminder to pass device -->
+    <div id="p2-prompt">
+      🙈 Player 1 has locked in their choice.<br />
+      <strong>Pass the device to Player 2</strong> and make your pick!
+    </div>
+
+    <!-- Move buttons -->
+    <div class="move-section">
+      <span class="section-label" id="move-section-label">Choose your move</span>
+      <div class="moves" role="group" aria-label="Move choices">
+        <button class="move-btn" data-move="rock"     aria-label="Rock">
+          <span class="icon">✊</span> Rock
+        </button>
+        <button class="move-btn" data-move="paper"    aria-label="Paper">
+          <span class="icon">🖐️</span> Paper
+        </button>
+        <button class="move-btn" data-move="scissors" aria-label="Scissors">
+          <span class="icon">✌️</span> Scissors
+        </button>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="ctrl-btn" id="reset-btn">🔄 Reset Scores</button>
+      <button class="ctrl-btn danger" id="clear-btn">🗑️ Clear History</button>
+    </div>
+
+    <!-- Round history -->
+    <div id="history">
+      <h3>Round History</h3>
+      <ul id="history-list">
+        <li class="history-empty">No rounds played yet.</li>
+      </ul>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>rps-online.com &mdash; Rock Paper Scissors for everyone</p>
+  </footer>
+
+  <script src="game.js"></script>
+</body>
+</html>
